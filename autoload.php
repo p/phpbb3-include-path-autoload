@@ -1,5 +1,8 @@
 <?php
 
+# https://gist.github.com/221634
+# modified to return false if the path does not exist
+
 /**
  * SplClassLoader implementation that implements the technical interoperability
  * standards for PHP 5.3 namespaces and class names.
@@ -130,7 +133,18 @@ class SplClassLoader
             }
             $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . $this->_fileExtension;
 
-            require ($this->_includePath !== null ? $this->_includePath . DIRECTORY_SEPARATOR : '') . $fileName;
+            $path = ($this->_includePath !== null ? $this->_includePath . DIRECTORY_SEPARATOR : '') . $fileName;
+            
+            foreach (explode(':', ini_get('include_path')) as $dir) {
+                if (file_exists("$dir/$path")) {
+                    require "$dir/$path";
+                }
+            }
         }
     }
 }
+
+# register it for phpbb
+
+$class_loader = new SplClassLoader();
+$class_loader->register();
