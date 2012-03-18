@@ -1,0 +1,24 @@
+Autoloading of dependencies from include_path for phpBB 3.1
+===========================================================
+
+This little gem is a class loader that will require files located on
+include_path.
+
+It is meant to be used together with e.g.
+https://github.com/p/phpbb3-dependencies.
+
+You can make use of it in one of two ways:
+
+1. Arrange for PHPBB_AUTOLOAD environment variable to have an absolute path
+to this file. For example for php-fpm you could say:
+
+env[PHPBB_AUTOLOAD] = /home/phpdev/shared/phpbb_autoload.php
+
+2. Copy it as [PHPBB_ROOT]/vendor/.composer/autoload.php
+
+Note: I have not tested this option but in theory it should work.
+
+Then you need to put the dependencies on the include_path.
+For example with php-fpm you could do:
+
+php_value[include_path] = .:/home/pie/apps/git-phpbb3-dependencies
