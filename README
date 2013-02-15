@@ -14,6 +14,10 @@ to this file. For example for php-fpm you could say:
 
 env[PHPBB_AUTOLOAD] = /home/phpdev/shared/phpbb_autoload.php
 
+Current phpBB versions also need:
+
+env[PHPBB_NO_COMPOSER_AUTOLOAD] = 1
+
 2. Copy it as [PHPBB_ROOT]/vendor/.composer/autoload.php
 
 Note: I have not tested this option but in theory it should work.
